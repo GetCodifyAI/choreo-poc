@@ -5,7 +5,7 @@ import ballerina/log;
 configurable string host = ?;
 configurable int port = ?;
 configurable string username = ?;
-configurable string password = ?;
+configurable string password = "";
 configurable string privateKeyPath = ?;
 configurable string privateKeyPassword = ?;
 configurable string path = ?;
@@ -52,9 +52,13 @@ public function main() returns error? {
     log:printInfo("Starting FTP server connector client");
     // Read the content of the file.
     stream<byte[], io:Error?> fileContent = check ftpClient->get(string `${path}/${fileName}`);
+    
+    // Process the content.
+    byte[][] content = check from var byteContent in fileContent
+    select byteContent;
+    log:printInfo("File content", fileName = fileName);
+    
     // Write the content to a file.
-    check io:fileWriteBlocksFromStream(string `./local/${fileName}`, fileContent);
-    // Write the content to a file.
-    _ = check ftpClient->put(string `/cut-dry-vendor-integration/choreo-poc/desc/${fileName}`, check io:fileReadBlocksAsStream(string `./local/${fileName}`));
+    _ = check ftpClient->put(string `/cut-dry-vendor-integration/choreo-poc/desc/${fileName}`, content);
     check fileContent.close();
 }
