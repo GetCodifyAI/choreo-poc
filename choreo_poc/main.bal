@@ -39,18 +39,3 @@ service on new ftp:Listener(config) {
     }
 }
 
-// ftp:Client ftpClient = check new({
-//     host: "sftp-vendors.cutanddry.com",
-//     port: 22,
-//     auth: {
-//         credentials: {username: "choreo-poc", password: ""},
-//         privateKey: {path: "./sftp.private.key", password: "changeit"}
-
-//     },
-//     protocol: ftp:SFTP
-// });
-// public function main() returns error? {
-//     log:printInfo("Connected to the server");
-//     ftp:FileInfo[] files = check ftpClient->list("/cut-dry-vendor-integration/choreo-poc");
-//     log:printInfo("Files in the directory", files = files);
-// }
