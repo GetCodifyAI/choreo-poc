@@ -1,8 +1,8 @@
 # Use the OpenJDK base image with Java 17
 FROM openjdk:17-oracle
 
-# Create a non-root user with a specific user ID (10014 in this case)
-RUN adduser --system --uid 10014 myuser
+# Create a non-root user with a user ID between 10000 and 20000
+RUN adduser --system --uid 15000 myuser
 
 # Set the working directory
 WORKDIR /app
