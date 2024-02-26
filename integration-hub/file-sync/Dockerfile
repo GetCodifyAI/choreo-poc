@@ -14,7 +14,7 @@ COPY target/file-sync-0.0.1-SNAPSHOT.jar /app/
 RUN chown -R myuser:myuser /app
 
 # Switch to the non-root user
-USER myuser
+USER 15000
 
 # Expose the port that the application runs on
 EXPOSE 8080
