@@ -1,12 +1,20 @@
 # Use the OpenJDK base image with Java 17
-# FROM openjdk:17-alpine, FROM openjdk:17-oracle, FROM openjdk:17-jdk-slim
 FROM openjdk:17-oracle
+
+# Create a non-root user with a specific user ID (10014 in this case)
+RUN adduser --system --uid 10014 myuser
 
 # Set the working directory
 WORKDIR /app
 
 # Copy the JAR file into the container at /app
 COPY target/file-sync-0.0.1-SNAPSHOT.jar /app/
+
+# Give ownership of the /app directory to the non-root user
+RUN chown -R myuser:myuser /app
+
+# Switch to the non-root user
+USER myuser
 
 # Expose the port that the application runs on
 EXPOSE 8080
