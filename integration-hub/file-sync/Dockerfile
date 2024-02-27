@@ -10,6 +10,9 @@ WORKDIR /app
 # Copy the JAR file into the container at /app
 COPY target/file-sync-0.0.1-SNAPSHOT.jar /app/
 
+# Copy the application.properties file into the container at /app/
+COPY src/main/resources/application.properties /app/
+
 # Give ownership of the /app directory to the non-root user
 RUN chown -R myuser:myuser /app
 
@@ -19,5 +22,5 @@ USER 15000
 # Expose the port that the application runs on
 EXPOSE 8080
 
-# Define the command to run the application
-CMD ["java", "-jar", "file-sync-0.0.1-SNAPSHOT.jar"]
+# Define the command to run the application with custom properties
+CMD ["java", "-jar", "file-sync-0.0.1-SNAPSHOT.jar", "--spring.config.location=file:/app/application.properties"]
